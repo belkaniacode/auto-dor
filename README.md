@@ -1,4 +1,8 @@
-# Схема подключения Auto-dor
+<p align="center">
+  <img src="logo.svg" alt="Gate Link" width="260">
+</p>
+
+# Схема подключения Gate Link
 
 Управление откатными воротами Alutech RTO-500
 Плата: ESP32-DevKitC V2 (ESP32-WROOM-32 / NodeMCU-32S 38pin)

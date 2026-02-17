@@ -1,6 +1,6 @@
 /*
  * =============================================================
- *  Auto-dor  --  Управление откатными воротами Alutech RTO-500
+ *  Gate Link  --  Управление откатными воротами Alutech RTO-500
  * =============================================================
  *
  *  Плата:  ESP32-DevKitC V2  (ESP32-WROOM-32 / NodeMCU-32S 38pin)
@@ -272,7 +272,8 @@ void handleRoot() {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Auto-dor</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTM0IiBoZWlnaHQ9IjEzNCIgdmlld0JveD0iMCAwIDEzNCAxMzQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iNjciIGN5PSI2NyIgcj0iNjciIGZpbGw9IiNDM0MzQzMiLz48ZWxsaXBzZSBjeD0iNjciIGN5PSI2NyIgcng9IjYyIiByeT0iNjMiIGZpbGw9IiM2OTI4RDgiLz48ZyBmaWx0ZXI9InVybCgjZmlsdGVyMF9kXzZfOSkiPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF82XzkpIj48cGF0aCBkPSJNNjcuNSAxMy45NEM1NC4zNTkzIDEzLjk0IDQzLjc0IDI0LjU1OTMgNDMuNzQgMzcuN1Y0Ny42SDM1LjgyQzMyLjQ1NTYgNDcuNiAyOS44OCA1MC4xNzU2IDI5Ljg4IDUzLjU0VjEwMS4wNkMyOS44OCAxMDQuNDI0IDMyLjQ1NTYgMTA3IDM1LjgyIDEwN0g5OS4xOEMxMDIuNTQ0IDEwNyAxMDUuMTIgMTA0LjQyNCAxMDUuMTIgMTAxLjA2VjUzLjU0QzEwNS4xMiA1MC4xNzU2IDEwMi41NDQgNDcuNiA5OS4xOCA0Ny42SDkxLjI2VjM3LjdDOTEuMjYgMjQuNTU5MyA4MC42NDA3IDEzLjk0IDY3LjUgMTMuOTRaTTY3LjUgMTcuOUM3OC41MjE1IDE3LjkgODcuMyAyNi42Nzg1IDg3LjMgMzcuN1Y0Ny42SDQ3LjdWMzcuN0M0Ny43IDI2LjY3ODUgNTYuNDc4NSAxNy45IDY3LjUgMTcuOVpNNjcuNSA2Ny40QzcwLjg2NDUgNjcuNCA3My40NCA2OS45NzU2IDczLjQ0IDczLjM0QzczLjQ0IDc1LjExODkgNzIuNjUxMSA3Ni42ODEzIDcxLjQ2IDc3LjY3MTNWODMuMjRDNzEuNDYgODUuNDIxMSA2OS42ODExIDg3LjIgNjcuNSA4Ny4yQzY1LjMxODkgODcuMiA2My41NCA4NS40MjExIDYzLjU0IDgzLjI0Vjc3LjY3MTNDNjIuMzQ4OSA3Ni42ODEzIDYxLjU2IDc1LjExODkgNjEuNTYgNzMuMzRDNjEuNTYgNjkuOTc1NiA2NC4xMzU1IDY3LjQgNjcuNSA2Ny40WiIgZmlsbD0iI0RFREVERSIvPjwvZz48L2c+PGRlZnM+PGZpbHRlciBpZD0iZmlsdGVyMF9kXzZfOSIgeD0iMTQiIHk9IjgiIHdpZHRoPSIxMDciIGhlaWdodD0iMTA3IiBmaWx0ZXJVbml0cz0idXNlclNwYWNlT25Vc2UiIGNvbG9yLWludGVycG9sYXRpb24tZmlsdGVycz0ic1JHQiI+PGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz48ZmVDb2xvck1hdHJpeCBpbj0iU291cmNlQWxwaGEiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAxMjcgMCIgcmVzdWx0PSJoYXJkQWxwaGEiLz48ZmVPZmZzZXQgZHk9IjQiLz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIyIi8+PGZlQ29tcG9zaXRlIGluMj0iaGFyZEFscGhhIiBvcGVyYXRvcj0ib3V0Ii8+PGZlQ29sb3JNYXRyaXggdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAuMjUgMCIvPjxmZUJsZW5kIG1vZGU9Im5vcm1hbCIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0iZWZmZWN0MV9kcm9wU2hhZG93XzZfOSIvPjxmZUJsZW5kIG1vZGU9Im5vcm1hbCIgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iZWZmZWN0MV9kcm9wU2hhZG93XzZfOSIgcmVzdWx0PSJzaGFwZSIvPjwvZmlsdGVyPjxjbGlwUGF0aCBpZD0iY2xpcDBfNl85Ij48cmVjdCB3aWR0aD0iOTkiIGhlaWdodD0iOTkiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxOCA4KSIvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPgo=">
+<title>Gate Link</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -350,7 +351,7 @@ setInterval(function(){
 void setup() {
   Serial.begin(115200);
   Serial.println();
-  Serial.println("=== Auto-dor: Управление воротами ===");
+  Serial.println("=== Gate Link: Управление воротами ===");
   Serial.println("Плата: ESP32-DevKitC V2 (ESP32-WROOM-32)");
   Serial.println();
 
