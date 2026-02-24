@@ -49,7 +49,7 @@ IPAddress dns(8, 8, 8, 8);               // DNS (Google)
 
 // ========================  ПИНЫ  =============================
 
-// Реле (active LOW — реле срабатывает при LOW на входе)
+// Реле (active HIGH — джампер на HIGH, реле срабатывает при HIGH на входе)
 #define RELAY_OPEN_PIN   26   // Реле 1 — открытие
 #define RELAY_CLOSE_PIN  27   // Реле 2 — закрытие
 
@@ -105,8 +105,8 @@ bool wifiConnected = false;
 // ========================  ФУНКЦИИ БЕЗОПАСНОСТИ  =============
 
 void allRelaysOff() {
-  digitalWrite(RELAY_OPEN_PIN,  HIGH);  // HIGH = реле ВЫКЛ (active LOW)
-  digitalWrite(RELAY_CLOSE_PIN, HIGH);
+  digitalWrite(RELAY_OPEN_PIN,  LOW);   // LOW = реле ВЫКЛ (active HIGH)
+  digitalWrite(RELAY_CLOSE_PIN, LOW);
   lastRelayOffTime = millis();
 }
 
@@ -140,10 +140,10 @@ bool startOpening() {
 
   allRelaysOff();
   delayMicroseconds(100);
-  digitalWrite(RELAY_CLOSE_PIN, HIGH);
-  digitalWrite(RELAY_OPEN_PIN, LOW);
+  digitalWrite(RELAY_CLOSE_PIN, LOW);    // сначала гарантируем выкл второго
+  digitalWrite(RELAY_OPEN_PIN, HIGH);    // включаем нужное
 
-  if (digitalRead(RELAY_OPEN_PIN) == LOW && digitalRead(RELAY_CLOSE_PIN) == LOW) {
+  if (digitalRead(RELAY_OPEN_PIN) == HIGH && digitalRead(RELAY_CLOSE_PIN) == HIGH) {
     allRelaysOff();
     allLedsOff();
     state = STATE_IDLE;
@@ -170,10 +170,10 @@ bool startClosing() {
 
   allRelaysOff();
   delayMicroseconds(100);
-  digitalWrite(RELAY_OPEN_PIN, HIGH);
-  digitalWrite(RELAY_CLOSE_PIN, LOW);
+  digitalWrite(RELAY_OPEN_PIN, LOW);     // сначала гарантируем выкл второго
+  digitalWrite(RELAY_CLOSE_PIN, HIGH);   // включаем нужное
 
-  if (digitalRead(RELAY_OPEN_PIN) == LOW && digitalRead(RELAY_CLOSE_PIN) == LOW) {
+  if (digitalRead(RELAY_OPEN_PIN) == HIGH && digitalRead(RELAY_CLOSE_PIN) == HIGH) {
     allRelaysOff();
     allLedsOff();
     state = STATE_IDLE;
@@ -355,7 +355,7 @@ void setup() {
   Serial.println("Плата: ESP32-DevKitC V2 (ESP32-WROOM-32)");
   Serial.println();
 
-  // --- Реле: выход, сразу ВЫКЛЮЧИТЬ (HIGH = OFF для active LOW) ---
+  // --- Реле: выход, сразу ВЫКЛЮЧИТЬ (LOW = OFF для active HIGH) ---
   pinMode(RELAY_OPEN_PIN,  OUTPUT);
   pinMode(RELAY_CLOSE_PIN, OUTPUT);
   allRelaysOff();  // ПЕРВЫМ ДЕЛОМ — выключить реле!
@@ -471,7 +471,7 @@ void loop() {
   // ==========================================================
   //  ПРИОРИТЕТ 3:  ЗАЩИТА ОТ ДВУХ РЕЛЕ ОДНОВРЕМЕННО
   // ==========================================================
-  if (digitalRead(RELAY_OPEN_PIN) == LOW && digitalRead(RELAY_CLOSE_PIN) == LOW) {
+  if (digitalRead(RELAY_OPEN_PIN) == HIGH && digitalRead(RELAY_CLOSE_PIN) == HIGH) {
     Serial.println("!!! КРИТИЧЕСКАЯ ЗАЩИТА: два реле одновременно — ВЫКЛЮЧАЮ !!!");
     allRelaysOff();
     allLedsOff();
